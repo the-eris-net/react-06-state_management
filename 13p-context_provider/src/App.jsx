@@ -1,111 +1,63 @@
 import { useState, useEffect } from 'react';
 
-
-function ListInput({ title, value, setValue, data, setData }) {
-  return (<label>
-        {title} :{' '}
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-        />
-      </label>
-  );
-}
-
-function ListForm({ title, value, setValue, data, setData }) {
-  return (<form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setData([...data, value]);
-          setValue(0);
+function ContentItem({ item, isDarkMode }) {
+  return (
+    <div
+      style={{
+        backgroundColor: isDarkMode ? '#fff' : '#333',
+        color: isDarkMode ? '#000' : '#fff',
+        margin: 8,
+        padding: 8,
+        borderRadius: 8,
       }}
     >
-      <ListInput
-        title={title}
-        value={value}
-        setValue={setValue}
-        data={data}
-        setData={setData}
-      />
-      <button type="submit">Add</button>
-    </form>
+      <span>
+        {item.id} : {item.text}
+      </span>
+    </div>
   );
 }
 
-function List({ title, value, setValue, data, setData }) {
+function Card({ title, content, isDarkMode }) {
   return (
-    <ul>
-      <ListForm
-        title={title}
-        value={value}
-        setValue={setValue}
-        data={data}
-        setData={setData}
-      />
-    {data.map((item, index) => (<li key={index}>{item}</li>))}
-  </ul>);
-}
-
-function Expense({expenseData, setExpenseData}) {
-  const [expense, setExpense] = useState(0);
-
-  return (
-    <List
-      title="Expense"
-      value={expense}
-      setValue={setExpense}
-      data={expenseData}
-      setData={setExpenseData}
-    />
-  );
-}
-
-function Income({incomeData, setIncomeData}) {
-  const [income, setIncome] = useState(0);
-
-  return (
-    <List
-      title="Income"
-      value={income}
-      setValue={setIncome}
-      data={incomeData}
-      setData={setIncomeData}
-    />
-  );
-}
-
-function Result({ incomeData, expenseData }) {
-  const totalIncome = incomeData
-    .reduce((acc, curr) => acc + Number(curr), 0);
-  const totalExpense = expenseData
-    .reduce((acc, curr) => acc + Number(curr), 0);
-  const total = totalIncome - totalExpense;
-  return (
-    <div>
-      <h2>Result</h2>
-      <p>Total Income: {totalIncome}</p>
-      <p>Total Expense: {totalExpense}</p>
-      <p>Total: {total}</p>
+    <div
+      style={{
+        border: `1px solid ${isDarkMode ? '#444' : '#ccc'}`,
+        borderRadius: '8px',
+        padding: '16px',
+        color: isDarkMode ? '#fff' : '#000',
+        backgroundColor: isDarkMode ? '#333' : '#fff',
+      }}
+    >
+      <strong>{title}</strong>
+      <div style={{ margin: 8 }}>
+        {content.map((item) => (
+          <ContentItem key={item.id} item={item} isDarkMode={isDarkMode} />
+        ))}
+      </div>
     </div>
   );
 }
 
 function App() {
-  const [incomeData, setIncomeData] = useState([]);
-  const [expenseData, setExpenseData] = useState([]);
+  const data = [
+    { id: 1, text: 'JSX 알아보기'},
+    { id: 2, text: '컴포넌트 스타일링 해보기' },
+    { id: 3, text: '일정 관리 앱 만들어 보기'},
+  ];
+
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   return (
     <div>
-      <Income 
-        incomeData={incomeData} 
-        setIncomeData={setIncomeData} />
-      <Expense 
-        expenseData={expenseData} 
-        setExpenseData={setExpenseData} />
-      <Result 
-        incomeData={incomeData} 
-        expenseData={expenseData} />
+      <button onClick={() => setIsDarkMode(!isDarkMode)}>
+        Toggle Dark Mode : {isDarkMode ? 'ON' : 'OFF'}
+      </button>
+      <Card
+        title="오늘 공부 체크리스트"
+        content={data}
+        isDarkMode={isDarkMode}
+      />
     </div>
   );
 }
