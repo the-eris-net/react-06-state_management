@@ -1,0 +1,11 @@
+.chart {
+  box-sizing: border-box;
+  height: 300px;
+  width: 100%;
+  border: 1px solid black;
+  padding: 10px;
+  margin-top: 10px;
+  display: flex;
+  /* 이거 추가하면 가운데 적용 */
+  /* justify-content: center; */
+}
