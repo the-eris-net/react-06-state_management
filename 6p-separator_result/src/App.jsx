@@ -55,8 +55,10 @@ function Income({incomeData, setIncomeData}) {
 }
 
 function Result({ incomeData, expenseData }) {
-  const totalIncome = incomeData.reduce((acc, curr) => acc + Number(curr), 0);
-  const totalExpense = expenseData.reduce((acc, curr) => acc + Number(curr), 0);
+  const totalIncome = incomeData
+    .reduce((acc, curr) => acc + Number(curr), 0);
+  const totalExpense = expenseData
+    .reduce((acc, curr) => acc + Number(curr), 0);
   const total = totalIncome - totalExpense;
   return (
     <div>
@@ -74,9 +76,15 @@ function App() {
 
   return (
     <div>
-      <Income incomeData={incomeData} setIncomeData={setIncomeData} />
-      <Expense expenseData={expenseData} setExpenseData={setExpenseData} />
-      <Result incomeData={incomeData} expenseData={expenseData} />
+      <Income 
+        incomeData={incomeData} 
+        setIncomeData={setIncomeData} />
+      <Expense 
+        expenseData={expenseData} 
+        setExpenseData={setExpenseData} />
+      <Result 
+        incomeData={incomeData} 
+        expenseData={expenseData} />
     </div>
   );
 }
