@@ -1,16 +1,8 @@
 import { useState, useEffect } from 'react';
 
-function List({ title, value, setValue, data, setData }) {
-  return (
-    <ul>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          setData([...data, value]);
-          setValue(0);
-      }}
-    >
-      <label>
+
+function ListInput({ title, value, setValue, data, setData }) {
+  return (<label>
         {title} :{' '}
         <input
           type="text"
@@ -18,11 +10,40 @@ function List({ title, value, setValue, data, setData }) {
           onChange={(e) => setValue(e.target.value)}
         />
       </label>
+  );
+}
+
+function ListForm({ title, value, setValue, data, setData }) {
+  return (<form
+        onSubmit={(e) => {
+          e.preventDefault();
+          setData([...data, value]);
+          setValue(0);
+      }}
+    >
+      <ListInput
+        title={title}
+        value={value}
+        setValue={setValue}
+        data={data}
+        setData={setData}
+      />
       <button type="submit">Add</button>
     </form>
-    {data.map((item, index) => (
-      <li key={index}>{item}</li>
-    ))}
+  );
+}
+
+function List({ title, value, setValue, data, setData }) {
+  return (
+    <ul>
+      <ListForm
+        title={title}
+        value={value}
+        setValue={setValue}
+        data={data}
+        setData={setData}
+      />
+    {data.map((item, index) => (<li key={index}>{item}</li>))}
   </ul>);
 }
 
