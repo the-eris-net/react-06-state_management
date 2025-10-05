@@ -1,10 +1,9 @@
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import store from './stores';
 
-
 function Card({ title, content }) {
-  const {isDarkMode, isLoggedIn} = store.getState();
-  
+  const { isDarkMode, isLoggedIn } = store.getState();
+
   return (
     <div
       style={{
@@ -13,23 +12,24 @@ function Card({ title, content }) {
         padding: '16px',
         color: isDarkMode ? '#fff' : '#000',
         backgroundColor: isDarkMode ? '#333' : '#fff',
-      }}  
+      }}
     >
       <strong>{title}</strong>
       <div style={{ margin: 8 }}>
-        {isLoggedIn ? <> {content} </> : <>로그인 후 내용을 확인하세요.</>}
+        {isLoggedIn 
+          ? <> {content} </> 
+          : <>로그인 후 내용을 확인하세요.</>}
       </div>
     </div>
   );
-} 
-          
+}
 
 function App() {
-  const [_, setIsStateChanged] = useState(false);
+  const [_, setIsStateChanged] = useState(store.getState());
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
-      setIsStateChanged((prev) => !prev);
+      setIsStateChanged(store.getState());
     });
 
     return () => {
@@ -42,7 +42,14 @@ function App() {
       <button onClick={() => store.dispatch({ type: 'DARK_MODE' })}>
         Toggle Dark Mode : {store.getState().isDarkMode ? 'ON' : 'OFF'}
       </button>
-      <button onClick={() => store.dispatch({ type: 'LOGGED_IN', payload: {isLoggedIn:!store.getState().isLoggedIn} })}>
+      <button
+        onClick={() =>
+          store.dispatch({
+            type: 'LOGGED_IN',
+            payload: { isLoggedIn: !store.getState().isLoggedIn },
+          })
+        }
+      >
         {store.getState().isLoggedIn ? '로그아웃' : '로그인'}
       </button>
       <Card
