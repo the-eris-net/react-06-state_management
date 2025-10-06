@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import store from './stores';
+import { setLoggedIn, toggleDarkMode } from './actions';
 
 function Card({ title, content }) {
   const { isDarkMode } = store.getState().theme;
@@ -42,17 +43,10 @@ function App() {
 
   return (
     <div>
-      <button onClick={() => store.dispatch({ type: 'DARK_MODE' })}>
+      <button onClick={() => store.dispatch(toggleDarkMode())}>
         Toggle Dark Mode : {isDarkMode ? 'ON' : 'OFF'}
       </button>
-      <button
-        onClick={() =>
-          store.dispatch({
-            type: 'LOGGED_IN',
-            payload: { isLoggedIn: !isLoggedIn },
-          })
-        }
-      >
+      <button onClick={() => store.dispatch(setLoggedIn(!isLoggedIn))}>
         {isLoggedIn ? '로그아웃' : '로그인'}
       </button>
       <Card
