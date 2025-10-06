@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleDarkMode, setLoggedIn } from './store';
+import { toggleDarkMode } from './store/slices/themeSlice';
+import { setLoggedIn } from './store/slices/loginSlice';
 
 function Card({ title, content }) {
-  const isDarkMode = useSelector((state) => state.isDarkMode);
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
 
   return (
     <div
@@ -25,8 +26,8 @@ function Card({ title, content }) {
 }
 
 function App() {
-  const isDarkMode = useSelector((state) => state.isDarkMode);
-  const isLoggedIn = useSelector((state) => state.isLoggedIn);
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
+  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const dispatch = useDispatch();
   
   return (
