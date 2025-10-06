@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleDarkMode, setLoggedIn } from './store';
 
 function Card({ title, content }) {
-  const { isDarkMode, isLoggedIn } = useSelector((state) => state);
+  const isDarkMode = useSelector((state) => state.isDarkMode);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
 
   return (
     <div
@@ -24,9 +25,10 @@ function Card({ title, content }) {
 }
 
 function App() {
-  const { isDarkMode, isLoggedIn } = useSelector((state) => state);
-  
+  const isDarkMode = useSelector((state) => state.isDarkMode);
+  const isLoggedIn = useSelector((state) => state.isLoggedIn);
   const dispatch = useDispatch();
+  
   return (
     <div>
       <button onClick={() => dispatch(toggleDarkMode())}>

@@ -1,6 +1,5 @@
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 
-// 초기 상태
 const initialState = {
   isDarkMode: false,
   isLoggedIn: true,
