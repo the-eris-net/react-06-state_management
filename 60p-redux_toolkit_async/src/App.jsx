@@ -4,9 +4,8 @@ import { toggleDarkMode } from './features/theme/themeSlice';
 import { setLoggedIn } from './features/login/loginSlice';
 import { fetchPokemon } from './features/posts/postSlice';
 
-function Card({ title, content }) {
+function Card({ title }) {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
-  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const { data, loading, error } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
@@ -24,11 +23,8 @@ function Card({ title, content }) {
         backgroundColor: isDarkMode ? '#333' : '#fff',
       }}
     >
-      <strong>{title}</strong>
-      <div style={{ margin: 8 }}>
-        {isLoggedIn ? <> {content} </> : <>로그인 후 내용을 확인하세요.</>}
-      </div>
-      <button 
+      <strong>{title}</strong><br/>
+      <button
         onClick={handleFetchPokemon}
         style={{
           padding: '8px 16px',
@@ -37,7 +33,7 @@ function Card({ title, content }) {
           color: '#fff',
           border: 'none',
           borderRadius: '4px',
-          cursor: 'pointer'
+          cursor: 'pointer',
         }}
         disabled={loading}
       >
@@ -51,7 +47,7 @@ function Card({ title, content }) {
       {data && (
         <div style={{ marginTop: '8px' }}>
           <strong>포켓몬 목록 ({data.count}개):</strong>
-          <ul style={{ maxHeight: '200px', overflowY: 'auto' }}>
+          <ul style={{ maxHeight: '200px', overflow: 'auto' }}>
             {data.results.slice(0, 10).map((pokemon, index) => (
               <li key={index}>{pokemon.name}</li>
             ))}
@@ -66,7 +62,7 @@ function App() {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
   const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
   const dispatch = useDispatch();
-  
+
   return (
     <div>
       <button onClick={() => dispatch(toggleDarkMode())}>
@@ -77,10 +73,11 @@ function App() {
       >
         {isLoggedIn ? '로그아웃' : '로그인'}
       </button>
-      <Card
-        title="오늘 공부 체크리스트"
-        content="리액트 Context API 사용하기"
-      />
+      {isLoggedIn ? (
+        <Card title="포켓몬 리스트" content="포켓몬 리스트 가져오기" />
+      ) : (
+        <div>로그인 후 내용을 확인하세요.</div>
+      )}
     </div>
   );
 }
