@@ -9,10 +9,6 @@ function Card({ title }) {
   const { data, loading, error } = useSelector((state) => state.posts);
   const dispatch = useDispatch();
 
-  const handleFetchPokemon = () => {
-    dispatch(fetchPokemon());
-  };
-
   return (
     <div
       style={{
@@ -25,15 +21,12 @@ function Card({ title }) {
     >
       <strong>{title}</strong><br/>
       <button
-        onClick={handleFetchPokemon}
+        onClick={() => dispatch(fetchPokemon())}
         style={{
           padding: '8px 16px',
-          margin: '8px 0',
           backgroundColor: isDarkMode ? '#555' : '#007bff',
           color: '#fff',
-          border: 'none',
           borderRadius: '4px',
-          cursor: 'pointer',
         }}
         disabled={loading}
       >

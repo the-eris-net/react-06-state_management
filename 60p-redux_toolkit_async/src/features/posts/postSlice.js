@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const fetchPokemon = createAsyncThunk(
   'posts/fetchPokemon',
   async () => {
-    const response = await fetch('https://pokeapi.co/api/v2/pokemon');
+    const response = await fetch('https://pokeapi.co/api/v2/pokemo');
     await new Promise(resolve => setTimeout(resolve, 2000));
     return response.json();
   }
