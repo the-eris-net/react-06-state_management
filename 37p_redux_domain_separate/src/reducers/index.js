@@ -1,14 +1,10 @@
-import { DARK_MODE, LOGGED_IN } from "../actions";
+import { combineReducers } from "redux";
+import themeReducer from "./themeReducers";
+import loginReducer from "./loginReducers";
 
-const initialState = { isDarkMode: false, isLoggedIn: true };
+const rootReducer = combineReducers({
+  theme: themeReducer,
+  login: loginReducer,
+});
 
-export default function myReducer(state = initialState, action) {
-  switch (action.type) {
-    case DARK_MODE:
-      return { ...state, isDarkMode: !state.isDarkMode };
-    case LOGGED_IN:
-      return { ...state, isLoggedIn: action.payload.isLoggedIn };
-    default:
-      return state;
-  }
-}
+export default rootReducer;

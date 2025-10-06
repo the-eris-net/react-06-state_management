@@ -2,7 +2,8 @@ import { useEffect, useState } from 'react';
 import store from './stores';
 
 function Card({ title, content }) {
-  const { isDarkMode, isLoggedIn } = store.getState();
+  const { isDarkMode } = store.getState().theme;
+  const { isLoggedIn } = store.getState().login;
 
   return (
     <div
@@ -26,6 +27,8 @@ function Card({ title, content }) {
 
 function App() {
   const [_, setIsStateChanged] = useState(store.getState());
+  const { isDarkMode } = store.getState().theme;
+  const { isLoggedIn } = store.getState().login;
 
   useEffect(() => {
     const unsubscribe = store.subscribe(() => {
@@ -40,17 +43,17 @@ function App() {
   return (
     <div>
       <button onClick={() => store.dispatch({ type: 'DARK_MODE' })}>
-        Toggle Dark Mode : {store.getState().isDarkMode ? 'ON' : 'OFF'}
+        Toggle Dark Mode : {isDarkMode ? 'ON' : 'OFF'}
       </button>
       <button
         onClick={() =>
           store.dispatch({
             type: 'LOGGED_IN',
-            payload: { isLoggedIn: !store.getState().isLoggedIn },
+            payload: { isLoggedIn: !isLoggedIn },
           })
         }
       >
-        {store.getState().isLoggedIn ? '로그아웃' : '로그인'}
+        {isLoggedIn ? '로그아웃' : '로그인'}
       </button>
       <Card
         title="오늘 공부 체크리스트"
