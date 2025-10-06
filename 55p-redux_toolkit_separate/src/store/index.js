@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
-import themeReducer from "./slices/themeSlice";
-import loginReducer from "./slices/loginSlice";
+import themeReducer from "../features/theme/themeSlice";
+import loginReducer from "../features/login/loginSlice";
 
 export const store = configureStore({
   reducer: {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleDarkMode } from './store/slices/themeSlice';
-import { setLoggedIn } from './store/slices/loginSlice';
+import { toggleDarkMode } from './features/theme/themeSlice';
+import { setLoggedIn } from './features/login/loginSlice';
 
 function Card({ title, content }) {
   const isDarkMode = useSelector((state) => state.theme.isDarkMode);
