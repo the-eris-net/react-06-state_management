@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleDarkMode } from './features/theme/themeSlice';
-import { setLoggedIn } from './features/login/loginSlice';
-import { fetchPokemon } from './features/posts/postSlice';
+import useStore from './store/useStore';
 
 function Card({ title }) {
-  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
-  const { data, loading, error } = useSelector((state) => state.posts);
-  const dispatch = useDispatch();
+  const isDarkMode = useStore((state) => state.isDarkMode);
+  const pokemonData = useStore((state) => state.pokemonData);
+  const loading = useStore((state) => state.loading);
+  const error = useStore((state) => state.error);
+  const fetchPokemon = useStore((state) => state.fetchPokemon);
 
   return (
     <div
@@ -21,7 +19,7 @@ function Card({ title }) {
     >
       <strong>{title}</strong><br/>
       <button
-        onClick={() => dispatch(fetchPokemon())}
+        onClick={fetchPokemon}
         style={{
           padding: '8px 16px',
           backgroundColor: isDarkMode ? '#555' : '#007bff',
@@ -37,11 +35,11 @@ function Card({ title }) {
           에러: {error}
         </div>
       )}
-      {data && (
+      {pokemonData && (
         <div style={{ marginTop: '8px' }}>
-          <strong>포켓몬 목록 ({data.count}개):</strong>
+          <strong>포켓몬 목록 ({pokemonData.count}개):</strong>
           <ul style={{ maxHeight: '200px', overflow: 'auto' }}>
-            {data.results.slice(0, 10).map((pokemon, index) => (
+            {pokemonData.results.slice(0, 10).map((pokemon, index) => (
               <li key={index}>{pokemon.name}</li>
             ))}
           </ul>
@@ -52,22 +50,23 @@ function Card({ title }) {
 }
 
 function App() {
-  const isDarkMode = useSelector((state) => state.theme.isDarkMode);
-  const isLoggedIn = useSelector((state) => state.login.isLoggedIn);
-  const dispatch = useDispatch();
+  const isDarkMode = useStore((state) => state.isDarkMode);
+  const isLoggedIn = useStore((state) => state.isLoggedIn);
+  const toggleDarkMode = useStore((state) => state.toggleDarkMode);
+  const setLoggedIn = useStore((state) => state.setLoggedIn);
 
   return (
     <div>
-      <button onClick={() => dispatch(toggleDarkMode())}>
+      <button onClick={toggleDarkMode}>
         Toggle Dark Mode : {isDarkMode ? 'ON' : 'OFF'}
       </button>
       <button
-        onClick={() => dispatch(setLoggedIn({ isLoggedIn: !isLoggedIn }))}
+        onClick={() => setLoggedIn(!isLoggedIn)}
       >
         {isLoggedIn ? '로그아웃' : '로그인'}
       </button>
       {isLoggedIn ? (
-        <Card title="포켓몬 리스트" content="포켓몬 리스트 가져오기" />
+        <Card title="포켓몬 리스트" />
       ) : (
         <div>로그인 후 내용을 확인하세요.</div>
       )}
