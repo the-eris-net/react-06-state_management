@@ -2,14 +2,21 @@ import { create } from 'zustand';
 
 const useStore = create((set, get) => ({
   isDarkMode: false,
-  isLoggedIn: true,
+  auth: {
+    isLoggedIn: true,
+  },
   pokemonData: null,
   loading: false,
   error: null,
 
-  toggleDarkMode: () => set({ isDarkMode: !get().isDarkMode }),
+  toggleDarkMode: () => set(state => ({ isDarkMode: !state.isDarkMode })),
   
-  setLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
+  setLoggedIn: (isLoggedIn) => set({
+    auth: {
+      ...get().auth,
+      isLoggedIn
+    }
+  }),
   
   fetchPokemon: async () => {
     set({ loading: true, error: null });

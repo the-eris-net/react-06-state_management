@@ -51,7 +51,7 @@ function Card({ title }) {
 
 function App() {
   const isDarkMode = useStore((state) => state.isDarkMode);
-  const isLoggedIn = useStore((state) => state.isLoggedIn);
+  const isLoggedIn = useStore((state) => state.auth.isLoggedIn);
   const toggleDarkMode = useStore((state) => state.toggleDarkMode);
   const setLoggedIn = useStore((state) => state.setLoggedIn);
 
